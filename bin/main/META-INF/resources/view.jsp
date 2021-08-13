@@ -29,6 +29,13 @@
 --%>
 
 <style>
+  
+  :required:focus {
+  box-shadow: 0  0 6px rgba(255,0,0,0.5);
+  border: 1px red solid;
+  outline: 0;
+}
+
 input[type=text], select, textarea {
   width: 100%; /* Full width */
   padding: 12px; /* Some padding */ 
@@ -95,8 +102,8 @@ input[type=submit]:hover {
 
 <div class="container">
 <form>
-<div class="form-group">
-	<input type="file" id="actual-btn" hidden/>
+ <div class="form-group">
+	<input type="file" id="actual-btn" required hidden/>
 
  <!-- our custom upload button -->
  <label>File:</label>
@@ -105,23 +112,23 @@ input[type=submit]:hover {
   <span id="file-chosen">No file chosen</span>
 
 	<br> <label for="title">Title</label>
-    <input type="text" id="title" name="Title" >
+    <input type="text" id="title" name="Title" required>
 
 	<label for="description">Description</label>
-    <textarea id="description" name="description" style="height:200px"></textarea>
+    <textarea id="description" name="description" style="height:200px" required></textarea>
 
     <label for="tags">Tags:</label>
-    <select class="form-control js-example-tokenizer" name="tags" multiple="multiple">
+    <select class="form-control js-example-tokenizer" name="tags" multiple="multiple"></select>
         <option selected='selected'>tag 1</option>
         <option value='tag2'>tag 2</option>
         <option value='tag3'>tag 3</option>
     </select>
     <br> <label for="brand">Brand</label>
-    <input type="text" id="brand" name="Brand" >
+    <input type="text" id="brand" name="Brand" required>
 
     <br> <label for="channel">Channel</label>
-    <select name="channel" id="channel" class="custom-select">
-      <option selected>----</option>
+    <select name="channel" id="channel" class="custom-select" required>
+      <option value="">---------</option>
       <option value="notAppicable">Not Appicable</option>
       <option value="other">Other</option>
       <option value="businesstoBusiness">Business to Business</option>
@@ -147,11 +154,11 @@ input[type=submit]:hover {
 
 
     <br> <label for="title">Client</label>
-    <input type="text" id="title" name="Title" >
+    <input type="text" id="client" name="client" required>
     
     <br> <label for="countryOrRegion">Country Or Region</label>
-    <select name="countryOrRegion" id="countryOrRegion" class="custom-select">
-      <option selected>----</option>
+    <select name="countryOrRegion" id="countryOrRegion" class="custom-select" required>
+      <option value="">---------</option>
       <option value="global">Global</option>
       <option value="greaterAfrica">Greater Africa</option>
       <option value="middleEast">Middle East South Asia</option>
@@ -199,8 +206,8 @@ input[type=submit]:hover {
     </select>
     
     <br> <label for="documentType">Document Type</label>
-    <select name="documentType" id="documentType" class="custom-select">
-      <option selected>----</option>
+    <select name="documentType" id="documentType" class="custom-select" required>
+      <option value="">---------</option>
       <option value="brandAssets">Brand Assets</option>
       <option value="briefandQualify ">Brief and Qualify</option>
       <option value="caseStudy">Case Study</option>
@@ -223,8 +230,8 @@ input[type=submit]:hover {
    </select>
 
     <br> <label for="industry">Industry</label>
-    <select name="industry" id="industry" class="custom-select">
-      <option selected>----</option>
+    <select name="industry" id="industry" class="custom-select" required>
+      <option value="">---------</option>
       <option value="notApplicable">Not Applicable</option>
       <option value="adultBeverages">Adult Beverages</option>
        <option value="caseStudy">Case Study</option>
@@ -335,11 +342,11 @@ input[type=submit]:hover {
     </select>
 
     <br> <label for="partner">Partner</label>
-    <input type="text" id="partner" name="Partner" >
+    <input type="text" id="partner" name="Partner" required>
 
     <br> <label for="primaryService">Primary Service</label>
-    <select name="primaryService" id="primaryService" class="custom-select">
-      <option selected>Custom Select Menu</option>
+    <select name="primaryService" id="primaryService" class="custom-select" required>
+      <option value="">---------</option>
       <option selected>----</option>
       <option value="notAppicable">Not Appicable</option>
       <option value="fieldSales">Field Sales & Merchandising</option>
@@ -364,8 +371,8 @@ input[type=submit]:hover {
       </select>
 
     <br> <label for="relevantYear">Relevant Year</label>
-    <select name="relevantYear" id="relevantYear" class="custom-select">
-      <option selected>----</option>
+    <select name="relevantYear" id="relevantYear" class="custom-select" required>
+      <option value="">---------</option>
       <option value="2010">2010</option>
       <option value="2011">2011</option>
       <option value="2012">2012</option>
@@ -386,8 +393,8 @@ input[type=submit]:hover {
     </select>
 
     <br> <label for="securityAccess">Security Access</label>
-    <select name="securityAccess" id="securityAccess" class="custom-select">
-      <option selected>----</option>
+    <select name="securityAccess" id="securityAccess" class="custom-select" required>
+      <option value="">---------</option>
       <option value="global">Global</option>
       <option value="africa">Africa</option>
       <option value="southafrica">South Africa</option>
@@ -600,8 +607,8 @@ input[type=submit]:hover {
     </select>
 
     <br> <label for="service">Service</label>
-    <select name="service" id="service" class="custom-select">
-      <option selected>----</option>
+    <select name="service" id="service" class="custom-select" required>
+      <option value="">---------</option>
       <option value="notApplicable">Not Applicable - Other</option>
       <option value="brandDevelopmentDesign">Brand Development & Design</option>
       <option value="brandDevelopmentPOS">Brand Development & Design - POS Execution</option>
@@ -672,7 +679,7 @@ input[type=submit]:hover {
   <input type="submit" value="Publish">
   <input type="reset" value="Cancel">
 
-</div>
+ </div>
 </form>
 </div>
 <script>

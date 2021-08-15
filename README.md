@@ -14,11 +14,12 @@ Copy build/libs/*.jar to liferay server deploy folder
 
 ## Set developer setting in portal-*.properties
 
+```
 theme.css.fast.load=false
 layout.template.cache.enabled=false
 freemarker.engine.resource.modification.check.interval=0
 minifier.enabled=false  
-
+```
 
 
 ## Possiblities

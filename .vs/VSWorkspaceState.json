@@ -1,0 +1,13 @@
+{
+  "ExpandedNodes": [
+    "",
+    "\\src",
+    "\\src\\main",
+    "\\src\\main\\java",
+    "\\src\\main\\java\\com",
+    "\\src\\main\\java\\com\\test",
+    "\\src\\main\\java\\com\\test\\portlet"
+  ],
+  "SelectedNode": "\\src\\main\\java\\com\\test\\portlet\\GetCustomFieldsResourceCommand.java",
+  "PreviewInSolutionExplorer": false
+}

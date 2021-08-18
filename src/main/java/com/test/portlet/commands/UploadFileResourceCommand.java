@@ -1,9 +1,7 @@
-package com.test.portlet;
+package com.test.portlet.commands;
 
-import com.liferay.document.library.kernel.service.DLFileEntryLocalService;
+import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.service.DLFileEntryLocalServiceUtil;
-import com.liferay.expando.kernel.util.ExpandoBridgeFactoryUtil;
-import com.liferay.expando.kernel.util.ExpandoBridgeUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -11,22 +9,16 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.PortletResponseUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
-
-import com.liferay.document.library.kernel.model.DLFileEntry;
-import com.liferay.document.library.kernel.model.DLFolder;
-
-import javax.portlet.PortletException;
-import javax.portlet.ResourceRequest;
-import javax.portlet.ResourceResponse;
-
 import com.liferay.portal.kernel.upload.UploadPortletRequest;
-
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Validator;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
+import javax.portlet.PortletException;
+import javax.portlet.ResourceRequest;
+import javax.portlet.ResourceResponse;
 import java.io.File;
 import java.io.IOException;
 import java.util.Enumeration;
@@ -35,13 +27,13 @@ import java.util.Enumeration;
 	immediate = true,
 	property = {
 		"javax.portlet.name=TestUpload",
-		"mvc.command.name=/cerebra/fields"
+		"mvc.command.name=/cerebra/upload"
 	},
 	service = MVCResourceCommand.class
 )
-public class GetCustomFieldsResourceCommand implements MVCResourceCommand {
+public class UploadFileResourceCommand implements MVCResourceCommand {
 
-	private static final Log _log = LogFactoryUtil.getLog(GetCustomFieldsResourceCommand.class);
+	private static final Log _log = LogFactoryUtil.getLog(UploadFileResourceCommand.class);
 
 	@Reference
 	private Portal _portal;
@@ -65,9 +57,7 @@ public class GetCustomFieldsResourceCommand implements MVCResourceCommand {
 			DLFileEntry file = DLFileEntryLocalServiceUtil.getDLFileEntry(33620);
 
 //			file.getExpandoBridge().
-
-
-
+			
 //			ExpandoBridgeFactoryUtil.getExpandoBridge()
 
 		} catch (PortalException e) {

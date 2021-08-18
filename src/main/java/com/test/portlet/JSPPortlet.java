@@ -30,7 +30,9 @@ import org.osgi.service.component.annotations.Component;
 	property = {
 		"com.liferay.portlet.css-class-wrapper=portlet-jsp",
 		"com.liferay.portlet.display-category=category.sample",
-		"com.liferay.portlet.header-portlet-css=/css/main.css",
+		"com.liferay.portlet.header-portlet-css=css/main.css",
+		"com.liferay.portlet.header-portlet-javascript=/js/dependency.js",
+		"com.liferay.portlet.header-portlet-javascript=/js/mock.js",
 		"com.liferay.portlet.instanceable=true",
 		"javax.portlet.name=TestUpload",
 		"com.liferay.portlet.single-page-application=false",

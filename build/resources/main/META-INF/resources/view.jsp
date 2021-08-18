@@ -93,9 +93,8 @@ input[type=submit]:hover {
 }
 </style>
 
-<portlet:resourceURL id="/cerebra/fields" var="uploadURL" />
-
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<portlet:resourceURL id="/cerebra/upload" var="uploadURL" />
+<portlet:resourceURL id="/cerebra/fields" var="fieldsURL" />
 
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.5/css/select2.min.css" />
 <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.5/js/select2.min.js"></script>
@@ -105,7 +104,11 @@ input[type=submit]:hover {
 
 <liferay-ui:panel collapsible="true" defaultState="collapsed" extended="true" title="<h3 class='ml-3'>Debug Information</h3>">
     <div class="test py-4">
-        <pre>uploadURL = <%= uploadURL %></pre>
+<pre id="debug">
+
+uploadURL = <%= uploadURL %>
+filedsURL = <%= fieldsURL %>
+</pre>
     </div>
 </liferay-ui:panel>
 
@@ -198,9 +201,24 @@ input[type=submit]:hover {
 
 AUI().ready(function (){
 
+    let debugPre = document.getElementById("debug")
+
+
+    console.log("Portlet is Ready")
+
+    AUI().use('aui-io-request', function(A){
+        A.io.request('<%= fieldsURL %>', {
+           method: 'get',
+           on: {
+                success: function() {
+                    console.log(this.get('responseData'));
+                }
+            }
+        });
+    });
+
+
     let fm = document.getElementById("cerebra-form");
-
-
 
     fm.onsubmit = function(event) {
         event.preventDefault()
@@ -225,17 +243,7 @@ AUI().ready(function (){
                 alert(thrownError);
             }
         });
-
     }
-
-
-
-
-
-
-
-
-
 
 
     $(function(){
@@ -254,7 +262,21 @@ AUI().ready(function (){
       fileChosen.textContent = this.files[0].name
     })
 
+
+
+
+    let mock = Mock()
+
+    console.log(mock.retrieveFields())
+    console.log(mock.uploadDocumentSuccess())
+    console.log(mock.uploadDocumentValidationFailure())
+    console.log(mock.uploadDocumentServerFailure())
+
 })
+
+
+
+
 
 </script>
 

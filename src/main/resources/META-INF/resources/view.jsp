@@ -119,8 +119,6 @@ filedsURL = <%= fieldsURL %>
  <div class="form-group">
 	<input type="file" name="file" id="actual-btn" hidden/>
 
-
-
      <!-- our custom upload button -->
      <label>File:</label>
      <label class="label1" for="actual-btn">Choose File</label>
@@ -141,10 +139,12 @@ filedsURL = <%= fieldsURL %>
     <br> <label for="brand">Brand</label>
     <input type="text" id="brand" name="Brand">
 
+    
     <br> <label for="channel">Channel</label>
     <select name="channel" id="channel" class="custom-select">
       <option value="">---------</option>
-     </select>
+      
+      </select>
 
 
     <br> <label for="title">Client</label>
@@ -182,6 +182,7 @@ filedsURL = <%= fieldsURL %>
     <br> <label for="securityAccess">Security Access</label>
     <select name="securityAccess" id="securityAccess" class="custom-select">
       <option value="">---------</option>
+
           
     </select>
 
@@ -198,6 +199,8 @@ filedsURL = <%= fieldsURL %>
 </form>
 </div>
 <script>
+
+  
 
 AUI().ready(function (){
 
@@ -266,8 +269,133 @@ AUI().ready(function (){
 
 
     let mock = Mock()
-
+    
     console.log(mock.retrieveFields())
+    
+    for(var i = 0;i<mock.retrieveFields().length; i++)
+    {
+       if(mock.retrieveFields()[i].id="channel")
+      {
+        var strChannelOptions = ""
+        var strPredefinedValues = mock.retrieveFields()[i].predefinedValues
+        console.log(strPredefinedValues)
+
+        for(var k =0; k<strPredefinedValues.length; k++)
+        {
+          strChannelOptions += '<option value="'+strPredefinedValues[k]+'">'+strPredefinedValues[k]+'</option>'
+
+        }
+        document.getElementById("channel").innerHTML=strChannelOptions
+
+      } 
+
+      if(mock.retrieveFields()[i].id="country_or_region")
+      {
+        var strcountryOptions = ""
+        var strcountryPredefinedValues = mock.retrieveFields()[i].predefinedValues
+        console.log(strPredefinedValues)
+
+        for(var m =0; m<strcountryPredefinedValues.length; m++)
+        {
+          strcountryOptions += '<option value="'+strcountryPredefinedValues[m]+'">'+strcountryPredefinedValues[m]+'</option>'
+
+        }
+        document.getElementById("countryOrRegion").innerHTML=strcountryOptions
+
+      } 
+
+      if(mock.retrieveFields()[i].id="document_type")
+      {
+        var strdocumentOptions = ""
+        var strdocumentPredefinedValues = mock.retrieveFields()[i].predefinedValues
+        console.log(strPredefinedValues)
+
+        for(var n =0; n<strdocumentPredefinedValues.length; n++)
+        {
+          strdocumentOptions += '<option value="'+strdocumentPredefinedValues[n]+'">'+strdocumentPredefinedValues[n]+'</option>'
+
+        }
+        document.getElementById("documentType").innerHTML=strdocumentOptions
+
+      } 
+
+      if(mock.retrieveFields()[i].id="industry")
+      {
+        var strIndustryOptions = ""
+        var strIndustryPredefinedValues = mock.retrieveFields()[i].predefinedValues
+        console.log(strPredefinedValues)
+
+        for(var p =0; p<strIndustryPredefinedValues.length; p++)
+        {
+          strIndustryOptions += '<option value="'+strIndustryPredefinedValues[p]+'">'+strIndustryPredefinedValues[p]+'</option>'
+
+        }
+        document.getElementById("industry").innerHTML=strChannelOptions
+
+      } 
+
+      if(mock.retrieveFields()[i].id="primary_service")
+      {
+        var strPrimaryOptions = ""
+        var strPrimaryPredefinedValues = mock.retrieveFields()[i].predefinedValues
+        console.log(strPredefinedValues)
+
+        for(var o =0; o<strPrimaryPredefinedValues.length; o++)
+        {
+          strPrimaryOptions += '<option value="'+strPrimaryPredefinedValues[o]+'">'+strPrimaryPredefinedValues[o]+'</option>'
+
+        }
+        document.getElementById("primaryService").innerHTML=strPrimaryOptions
+
+      } 
+
+      if(mock.retrieveFields()[i].id="relevant_year")
+      {
+        var strRelevantOptions = ""
+        var strRelevantPredefinedValues = mock.retrieveFields()[i].predefinedValues
+        console.log(strPredefinedValues)
+
+        for(var o =0; o<strRelevantPredefinedValues.length; o++)
+        {
+          strRelevantOptions += '<option value="'+strRelevantPredefinedValues[o]+'">'+strRelevantPredefinedValues[o]+'</option>'
+
+        }
+        document.getElementById("relevantYear").innerHTML=strRelevantOptions
+
+      } 
+
+      if(mock.retrieveFields()[i].id="security_access")
+      {
+        var strSecurityOptions = ""
+        var strSecurityPredefinedValues = mock.retrieveFields()[i].predefinedValues
+        console.log(strPredefinedValues)
+
+        for(var x =0; x<strSecurityPredefinedValues.length; x++)
+        {
+          strSecurityOptions += '<option value="'+strSecurityPredefinedValues[x]+'">'+strSecurityPredefinedValues[x]+'</option>'
+
+        }
+        document.getElementById("securityAccess").innerHTML=strSecurityOptions
+
+      } 
+
+      if(mock.retrieveFields()[i].id="service")
+      {
+        var strServiceOptions = ""
+        var strServicePredefinedValues = mock.retrieveFields()[i].predefinedValues
+        console.log(strPredefinedValues)
+
+        for(var j =0; j<strServicePredefinedValues.length; j++)
+        {
+          strServiceOptions += '<option value="'+strServicePredefinedValues[j]+'">'+strServicePredefinedValues[j]+'</option>'
+
+        }
+        document.getElementById("service").innerHTML=strServiceOptions
+
+      } 
+ 
+      
+    } 
     console.log(mock.uploadDocumentSuccess())
     console.log(mock.uploadDocumentValidationFailure())
     console.log(mock.uploadDocumentServerFailure())

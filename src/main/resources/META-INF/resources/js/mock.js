@@ -29,7 +29,7 @@ function Mock () {
                 type: "select",
                 required: true,
                 predefinedValues:  [
-                    "Not Appicable",
+                    "Not Applicable",
                     "Other",
                     "Business to Business",
                     "Convenience",
@@ -450,6 +450,7 @@ function Mock () {
         retrieveFields : function () {
             return this.fields
         },
+
 
         uploadDocumentSuccess : function () {
             return {

@@ -126,68 +126,68 @@ filedsURL = <%= fieldsURL %>
       <span id="file-chosen">No file chosen</span>
 
 	<br> <label for="title">Title</label>
-    <input type="text" id="title" name="Title">
+    <input type="text" id="title" name="Title" required>
 
 	<label for="description">Description</label>
-    <textarea id="description" name="description" style="height:200px"></textarea>
+    <textarea id="description" name="description" style="height:200px" required></textarea>
 
     <label for="tags">Tags:</label>
-    <select class="form-control js-example-tokenizer" name="tags" multiple="multiple">
+    <select class="form-control js-example-tokenizer" name="tags" multiple="multiple" required>
         <option selected value="Test">Test</option>
     </select>
 
     <br> <label for="brand">Brand</label>
-    <input type="text" id="brand" name="Brand">
+    <input type="text" id="brand" name="Brand" required>
 
     
     <br> <label for="channel">Channel</label>
-    <select name="channel" id="channel" class="custom-select">
+    <select class="form-control js-example-basic-single" name="channel" id="channel" class="custom-select" required>
       <option value="">---------</option>
       
       </select>
 
 
     <br> <label for="title">Client</label>
-    <input type="text" id="client" name="client">
+    <input type="text" id="client" name="client" required> 
     
     <br> <label for="countryOrRegion">Country Or Region</label>
-    <select name="countryOrRegion" id="countryOrRegion" class="custom-select">
+    <select name="countryOrRegion" id="countryOrRegion" class="custom-select" required>
       <option value="">---------</option>
     </select>
     
     <br> <label for="documentType">Document Type</label>
-    <select name="documentType" id="documentType" class="custom-select">
+    <select name="documentType" id="documentType" class="custom-select" required>
       <option value="">---------</option>
    </select>
 
     <br> <label for="industry">Industry</label>
-    <select name="industry" id="industry" class="custom-select">
+    <select name="industry" id="industry" class="custom-select" required>
       <option selected value="Test">Test</option>
     </select>
 
     <br> <label for="partner">Partner</label>
-    <input type="text" id="partner" name="Partner">
+    <input type="text" id="partner" name="Partner" required>
 
     <br> <label for="primaryService">Primary Service</label>
-    <select name="primaryService" id="primaryService" class="custom-select">
+    <select name="primaryService" id="primaryService" class="custom-select" required>
       <option value="Test">Test</option>
       </select>
 
     <br> <label for="relevantYear">Relevant Year</label>
-    <select name="relevantYear" id="relevantYear" class="custom-select">
+    <select name="relevantYear" id="relevantYear" class="custom-select" required>
       <option value="1960">1960</option>
       
     </select>
 
     <br> <label for="securityAccess">Security Access</label>
-    <select name="securityAccess" id="securityAccess" class="custom-select">
+    <select name="securityAccess" id="securityAccess" class="custom-select" required>
       <option value="">---------</option>
 
           
     </select>
 
     <br> <label for="service">Service</label>
-    <select name="service" id="service" class="custom-select">
+    <select name="service" id="service" class="custom-select" required>
       <option value="">---------</option>
       <option value="notApplicable">Not Applicable - Other</option>
     </select>
@@ -274,22 +274,26 @@ AUI().ready(function (){
     
     for(var i = 0;i<mock.retrieveFields().length; i++)
     {
-       if(mock.retrieveFields()[i].id="channel")
+      if(mock.retrieveFields()[i].id=="channel")
       {
         var strChannelOptions = ""
+        var strlength =  mock.retrieveFields()[i].predefinedValues.length
+        console.log(length)
         var strPredefinedValues = mock.retrieveFields()[i].predefinedValues
         console.log(strPredefinedValues)
 
-        for(var k =0; k<strPredefinedValues.length; k++)
+        for(var k =0; k<mock.retrieveFields()[i].predefinedValues.length; k++)
         {
-          strChannelOptions += '<option value="'+strPredefinedValues[k]+'">'+strPredefinedValues[k]+'</option>'
+          strChannelOptions += '<option value="'+mock.retrieveFields()[i].predefinedValues[k]+'">'+mock.retrieveFields()[i].predefinedValues[k]+'</option>'
 
         }
         document.getElementById("channel").innerHTML=strChannelOptions
 
-      } 
+     
 
-      if(mock.retrieveFields()[i].id="country_or_region")
+      }
+
+      if(mock.retrieveFields()[i].id=="country_or_region")
       {
         var strcountryOptions = ""
         var strcountryPredefinedValues = mock.retrieveFields()[i].predefinedValues
@@ -304,7 +308,7 @@ AUI().ready(function (){
 
       } 
 
-      if(mock.retrieveFields()[i].id="document_type")
+      if(mock.retrieveFields()[i].id=="document_type")
       {
         var strdocumentOptions = ""
         var strdocumentPredefinedValues = mock.retrieveFields()[i].predefinedValues
@@ -319,7 +323,7 @@ AUI().ready(function (){
 
       } 
 
-      if(mock.retrieveFields()[i].id="industry")
+      if(mock.retrieveFields()[i].id=="industry")
       {
         var strIndustryOptions = ""
         var strIndustryPredefinedValues = mock.retrieveFields()[i].predefinedValues
@@ -334,7 +338,7 @@ AUI().ready(function (){
 
       } 
 
-      if(mock.retrieveFields()[i].id="primary_service")
+      if(mock.retrieveFields()[i].id=="primary_service")
       {
         var strPrimaryOptions = ""
         var strPrimaryPredefinedValues = mock.retrieveFields()[i].predefinedValues
@@ -349,7 +353,7 @@ AUI().ready(function (){
 
       } 
 
-      if(mock.retrieveFields()[i].id="relevant_year")
+      if(mock.retrieveFields()[i].id=="relevant_year")
       {
         var strRelevantOptions = ""
         var strRelevantPredefinedValues = mock.retrieveFields()[i].predefinedValues
@@ -364,7 +368,7 @@ AUI().ready(function (){
 
       } 
 
-      if(mock.retrieveFields()[i].id="security_access")
+      if(mock.retrieveFields()[i].id=="security_access")
       {
         var strSecurityOptions = ""
         var strSecurityPredefinedValues = mock.retrieveFields()[i].predefinedValues
@@ -379,7 +383,7 @@ AUI().ready(function (){
 
       } 
 
-      if(mock.retrieveFields()[i].id="service")
+      if(mock.retrieveFields()[i].id=="service")
       {
         var strServiceOptions = ""
         var strServicePredefinedValues = mock.retrieveFields()[i].predefinedValues
@@ -392,7 +396,7 @@ AUI().ready(function (){
         }
         document.getElementById("service").innerHTML=strServiceOptions
 
-      } 
+      }  
  
       
     } 

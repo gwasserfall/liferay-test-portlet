@@ -92,7 +92,7 @@ public class UploadFileResourceCommand implements MVCResourceCommand {
 
 
 		response.put("status", 200);
-		response.put("message", "Some shit happened");
+		response.put("message", "Some poo happened");
 
 		try {
 			PortletResponseUtil.write(resourceResponse, response.toJSONString());

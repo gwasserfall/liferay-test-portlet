@@ -214,12 +214,14 @@ AUI().ready(function (){
            method: 'get',
            on: {
                 success: function() {
+                    console.log("Here is your data")
                     console.log(this.get('responseData'));
                 }
             }
         });
     });
 
+    console.log("Mkday")
 
     let fm = document.getElementById("cerebra-form");
 

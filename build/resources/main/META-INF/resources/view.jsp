@@ -129,7 +129,7 @@ filedsURL = <%= fieldsURL %>
     <input type="text" id="title" name="Title" required>
 
 	<label for="description">Description</label>
-    <textarea id="description" name="description" style="height:200px"></textarea>
+    <textarea id="description" name="description" style="height:200px" required></textarea>
 
     <label for="tags">Tags:</label>
     <select class="form-control js-example-tokenizer" name="tags" multiple="multiple" required>
@@ -166,7 +166,7 @@ filedsURL = <%= fieldsURL %>
     </select>
 
     <br> <label for="partner">Partner</label>
-    <input type="text" id="partner" name="Partner">
+    <input type="text" id="partner" name="Partner" required>
 
     <br> <label for="primaryService">Primary Service</label>
     <select name="primaryService" id="primaryService" class="custom-select" required>
@@ -214,12 +214,14 @@ AUI().ready(function (){
            method: 'get',
            on: {
                 success: function() {
+                    console.log("Here is your data")
                     console.log(this.get('responseData'));
                 }
             }
         });
     });
 
+    console.log("Mkday")
 
     let fm = document.getElementById("cerebra-form");
 

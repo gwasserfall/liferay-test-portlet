@@ -21,6 +21,8 @@ freemarker.engine.resource.modification.check.interval=0
 minifier.enabled=false  
 ```
 
+## Adding to JIRA: INTRANET
+
 
 ## Possiblities
 

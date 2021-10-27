@@ -95,6 +95,7 @@ input[type=submit]:hover {
 
 <portlet:resourceURL id="/cerebra/upload" var="uploadURL" />
 <portlet:resourceURL id="/cerebra/fields" var="fieldsURL" />
+<portlet:resourceURL id="/cerebra/folders" var="foldersURL" />
 
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.5/css/select2.min.css" />
 <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.5/js/select2.min.js"></script>
@@ -107,7 +108,8 @@ input[type=submit]:hover {
 <pre id="debug">
 
 uploadURL = <%= uploadURL %>
-filedsURL = <%= fieldsURL %>
+fieldsURL = <%= fieldsURL %>
+foldersURL = <%= foldersURL %>
 </pre>
     </div>
 </liferay-ui:panel>
@@ -125,69 +127,83 @@ filedsURL = <%= fieldsURL %>
      <!-- name of file chosen -->
       <span id="file-chosen">No file chosen</span>
 
+
+
 	<br> <label for="title">Title</label>
-    <input type="text" id="title" name="Title" required>
+    <input type="text" id="title" name="Title" >
 
 	<label for="description">Description</label>
-    <textarea id="description" name="description" style="height:200px" required></textarea>
+    <textarea id="description" name="description" style="height:200px" ></textarea>
 
-    <label for="tags">Tags:</label>
-    <select class="form-control js-example-tokenizer" name="tags" multiple="multiple" required>
-        <option selected value="Test">Test</option>
-    </select>
+    <div class="row">
+      <div class="col-lg">
+        <label for="countryOrRegion">Country Or Region</label>
+        <select name="countryOrRegion" id="countryOrRegion" class="custom-select" >
+          <option value="">---------</option>
+        </select>
+      </div>
+      <div class="col-lg">
+        <label for="documentType">Document Type</label>
+        <select name="documentType" id="documentType" class="custom-select" >
+          <option selected disabled>Select Document Type</option>
+       </select>
+      </div>
+    </div>
+
+
+    <label for="tags" style="padding-bottom: 6px;">Tags</label>
+        <select class="form-control js-example-tokenizer" name="tags" multiple="multiple" >
+            <option selected value="Test">Test</option>
+        </select>
+
+    
 
     <br> <label for="brand">Brand</label>
-    <input type="text" id="brand" name="Brand" required>
+    <input type="text" id="brand" name="Brand" >
 
     
     <br> <label for="channel">Channel</label>
-    <select class="form-control js-example-basic-single" name="channel" id="channel" class="custom-select" required>
+    <select class="form-control js-example-basic-single" name="channel" id="channel" class="custom-select" >
       <option value="">---------</option>
       
       </select>
 
 
     <br> <label for="title">Client</label>
-    <input type="text" id="client" name="client" required> 
+    <input type="text" id="client" name="client" >
     
-    <br> <label for="countryOrRegion">Country Or Region</label>
-    <select name="countryOrRegion" id="countryOrRegion" class="custom-select" required>
-      <option value="">---------</option>
-    </select>
     
-    <br> <label for="documentType">Document Type</label>
-    <select name="documentType" id="documentType" class="custom-select" required>
-      <option value="">---------</option>
-   </select>
+    
+
 
     <br> <label for="industry">Industry</label>
-    <select name="industry" id="industry" class="custom-select" required>
+    <select name="industry" id="industry" class="custom-select" >
       <option selected value="Test">Test</option>
     </select>
 
     <br> <label for="partner">Partner</label>
-    <input type="text" id="partner" name="Partner" required>
+    <input type="text" id="partner" name="Partner" >
 
     <br> <label for="primaryService">Primary Service</label>
-    <select name="primaryService" id="primaryService" class="custom-select" required>
+    <select name="primaryService" id="primaryService" class="custom-select" >
       <option value="Test">Test</option>
       </select>
 
     <br> <label for="relevantYear">Relevant Year</label>
-    <select name="relevantYear" id="relevantYear" class="custom-select" required>
+    <select name="relevantYear" id="relevantYear" class="custom-select" >
       <option value="1960">1960</option>
       
     </select>
 
     <br> <label for="securityAccess">Security Access</label>
-    <select name="securityAccess" id="securityAccess" class="custom-select" required>
+    <select name="securityAccess" id="securityAccess" class="custom-select" >
       <option value="">---------</option>
 
           
     </select>
 
     <br> <label for="service">Service</label>
-    <select name="service" id="service" class="custom-select" required>
+    <select name="service" id="service" class="custom-select" >
       <option value="">---------</option>
       <option value="notApplicable">Not Applicable - Other</option>
     </select>
@@ -200,7 +216,6 @@ filedsURL = <%= fieldsURL %>
 </div>
 <script>
 
-  
 
 AUI().ready(function (){
 
@@ -214,8 +229,26 @@ AUI().ready(function (){
            method: 'get',
            on: {
                 success: function() {
-                    console.log("Here is your data")
-                    console.log(this.get('responseData'));
+
+                  //  let data = JSON.parse(this.get('responseData'));
+                  //  console.log(data);
+                }
+            }
+        });
+    });
+
+
+    AUI().use('aui-io-request', function(A){
+        A.io.request('<%= foldersURL %>', {
+           method: 'get',
+           on: {
+                success: function() {
+                    let data = JSON.parse(this.get('responseData'));
+                    let select = document.getElementById("documentType");
+
+                    data.forEach(folder => {
+                        select.innerHTML += `<option value="${data.id}">${data.name}</option>`
+                    })
                 }
             }
         });
@@ -260,7 +293,6 @@ AUI().ready(function (){
     });
 
     const actualBtn = document.getElementById('actual-btn');
-
     const fileChosen = document.getElementById('file-chosen');
 
     actualBtn.addEventListener('change', function(){
@@ -268,143 +300,6 @@ AUI().ready(function (){
     })
 
 
-
-
-    let mock = Mock()
-    
-    console.log(mock.retrieveFields())
-    
-    for(var i = 0;i<mock.retrieveFields().length; i++)
-    {
-      if(mock.retrieveFields()[i].id=="channel")
-      {
-        var strChannelOptions = ""
-        var strlength =  mock.retrieveFields()[i].predefinedValues.length
-        console.log(length)
-        var strPredefinedValues = mock.retrieveFields()[i].predefinedValues
-        console.log(strPredefinedValues)
-
-        for(var k =0; k<mock.retrieveFields()[i].predefinedValues.length; k++)
-        {
-          strChannelOptions += '<option value="'+mock.retrieveFields()[i].predefinedValues[k]+'">'+mock.retrieveFields()[i].predefinedValues[k]+'</option>'
-
-        }
-        document.getElementById("channel").innerHTML=strChannelOptions
-
-     
-
-      }
-
-      if(mock.retrieveFields()[i].id=="country_or_region")
-      {
-        var strcountryOptions = ""
-        var strcountryPredefinedValues = mock.retrieveFields()[i].predefinedValues
-        console.log(strPredefinedValues)
-
-        for(var m =0; m<strcountryPredefinedValues.length; m++)
-        {
-          strcountryOptions += '<option value="'+strcountryPredefinedValues[m]+'">'+strcountryPredefinedValues[m]+'</option>'
-
-        }
-        document.getElementById("countryOrRegion").innerHTML=strcountryOptions
-
-      } 
-
-      if(mock.retrieveFields()[i].id=="document_type")
-      {
-        var strdocumentOptions = ""
-        var strdocumentPredefinedValues = mock.retrieveFields()[i].predefinedValues
-        console.log(strPredefinedValues)
-
-        for(var n =0; n<strdocumentPredefinedValues.length; n++)
-        {
-          strdocumentOptions += '<option value="'+strdocumentPredefinedValues[n]+'">'+strdocumentPredefinedValues[n]+'</option>'
-
-        }
-        document.getElementById("documentType").innerHTML=strdocumentOptions
-
-      } 
-
-      if(mock.retrieveFields()[i].id=="industry")
-      {
-        var strIndustryOptions = ""
-        var strIndustryPredefinedValues = mock.retrieveFields()[i].predefinedValues
-        console.log(strPredefinedValues)
-
-        for(var p =0; p<strIndustryPredefinedValues.length; p++)
-        {
-          strIndustryOptions += '<option value="'+strIndustryPredefinedValues[p]+'">'+strIndustryPredefinedValues[p]+'</option>'
-
-        }
-        document.getElementById("industry").innerHTML=strChannelOptions
-
-      } 
-
-      if(mock.retrieveFields()[i].id=="primary_service")
-      {
-        var strPrimaryOptions = ""
-        var strPrimaryPredefinedValues = mock.retrieveFields()[i].predefinedValues
-        console.log(strPredefinedValues)
-
-        for(var o =0; o<strPrimaryPredefinedValues.length; o++)
-        {
-          strPrimaryOptions += '<option value="'+strPrimaryPredefinedValues[o]+'">'+strPrimaryPredefinedValues[o]+'</option>'
-
-        }
-        document.getElementById("primaryService").innerHTML=strPrimaryOptions
-
-      } 
-
-      if(mock.retrieveFields()[i].id=="relevant_year")
-      {
-        var strRelevantOptions = ""
-        var strRelevantPredefinedValues = mock.retrieveFields()[i].predefinedValues
-        console.log(strPredefinedValues)
-
-        for(var o =0; o<strRelevantPredefinedValues.length; o++)
-        {
-          strRelevantOptions += '<option value="'+strRelevantPredefinedValues[o]+'">'+strRelevantPredefinedValues[o]+'</option>'
-
-        }
-        document.getElementById("relevantYear").innerHTML=strRelevantOptions
-
-      } 
-
-      if(mock.retrieveFields()[i].id=="security_access")
-      {
-        var strSecurityOptions = ""
-        var strSecurityPredefinedValues = mock.retrieveFields()[i].predefinedValues
-        console.log(strPredefinedValues)
-
-        for(var x =0; x<strSecurityPredefinedValues.length; x++)
-        {
-          strSecurityOptions += '<option value="'+strSecurityPredefinedValues[x]+'">'+strSecurityPredefinedValues[x]+'</option>'
-
-        }
-        document.getElementById("securityAccess").innerHTML=strSecurityOptions
-
-      } 
-
-      if(mock.retrieveFields()[i].id=="service")
-      {
-        var strServiceOptions = ""
-        var strServicePredefinedValues = mock.retrieveFields()[i].predefinedValues
-        console.log(strPredefinedValues)
-
-        for(var j =0; j<strServicePredefinedValues.length; j++)
-        {
-          strServiceOptions += '<option value="'+strServicePredefinedValues[j]+'">'+strServicePredefinedValues[j]+'</option>'
-
-        }
-        document.getElementById("service").innerHTML=strServiceOptions
-
-      }  
- 
-      
-    } 
-    console.log(mock.uploadDocumentSuccess())
-    console.log(mock.uploadDocumentValidationFailure())
-    console.log(mock.uploadDocumentServerFailure())
 
 })
 

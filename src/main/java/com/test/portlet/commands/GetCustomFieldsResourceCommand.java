@@ -75,13 +75,14 @@ public class GetCustomFieldsResourceCommand implements MVCResourceCommand {
 		try {
 
 
-			ExpandoTable table = ExpandoTableLocalServiceUtil.getDefaultTable(PortalUtil.getDefaultCompanyId(),
+			ExpandoTable table = ExpandoTableLocalServiceUtil.getDefaultTable(
+					PortalUtil.getDefaultCompanyId(),
 					dlFileEntryId );
 
 			List<ExpandoColumn> customFields = ExpandoColumnLocalServiceUtil.getColumns(table.getTableId());
 
 			for (ExpandoColumn field: customFields) {
-				System.out.println(field.getTypeSettingsProperties().getProperty("display-type"));
+				System.out.println(field);
 				JSONObject column = _jsonFactory.createJSONObject();
 				column.put("type", field.getTypeSettingsProperties().getProperty("display-type"));
 				column.put("id", field.getName());
@@ -96,15 +97,10 @@ public class GetCustomFieldsResourceCommand implements MVCResourceCommand {
 					column.put("predefinedValues", _jsonFactory.createJSONArray());
 				}
 
-
-				// Check if field is required or not, from static list
+				// TODO: Check if field is required or not, from static list
 				column.put("required", false);
-
 				data.put(column);
 			}
-
-
-
 		} catch (PortalException e) {
 			e.printStackTrace();
 		}

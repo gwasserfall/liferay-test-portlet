@@ -38,11 +38,12 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.List;
+import java.util.Locale;
 
 @Component(
 	immediate = true,
 	property = {
-		"javax.portlet.name=TestUpload",
+		"javax.portlet.name=CerebraUpload",
 		"mvc.command.name=/cerebra/fields"
 	},
 	service = MVCResourceCommand.class
@@ -63,17 +64,12 @@ public class GetCustomFieldsResourceCommand implements MVCResourceCommand {
 		throws PortletException {
 
 		JSONObject response = _jsonFactory.createJSONObject();
-
-
 		JSONArray data = _jsonFactory.createJSONArray();
-
-		System.out.println("Resource Command Has Run!");
 
 		// Get the DLFileEntry Model Class, get the ID based on this instance
 		long dlFileEntryId = ClassNameLocalServiceUtil.getClassNameId(DLFileEntry.class.getName());
 
 		try {
-
 
 			ExpandoTable table = ExpandoTableLocalServiceUtil.getDefaultTable(
 					PortalUtil.getDefaultCompanyId(),
@@ -82,20 +78,25 @@ public class GetCustomFieldsResourceCommand implements MVCResourceCommand {
 			List<ExpandoColumn> customFields = ExpandoColumnLocalServiceUtil.getColumns(table.getTableId());
 
 			for (ExpandoColumn field: customFields) {
-				System.out.println(field);
+
 				JSONObject column = _jsonFactory.createJSONObject();
 				column.put("type", field.getTypeSettingsProperties().getProperty("display-type"));
-				column.put("id", field.getName());
-				column.put("displayName", (field.getName()).replaceAll("_", " "));
-
+				column.put("id", "cf_" + field.getName());
+				column.put("displayName", (field.getDisplayName(Locale.US)));
 
 				String defaultValues = field.getDefaultData();
 
+				JSONArray defaults = _jsonFactory.createJSONArray();
+
 				if (defaultValues.length() > 0) {
-					column.put("predefinedValues", _jsonFactory.createJSONArray(defaultValues.split(",")));
-				} else {
-					column.put("predefinedValues", _jsonFactory.createJSONArray());
+
+					// Replace nested commas
+					for (String value : defaultValues.split(",")) {
+						defaults.put(value.replace("[$LIFERAY_EXPANDO_COMMA$]", ","));
+					}
 				}
+
+				column.put("predefinedValues", defaults);
 
 				// TODO: Check if field is required or not, from static list
 				column.put("required", false);

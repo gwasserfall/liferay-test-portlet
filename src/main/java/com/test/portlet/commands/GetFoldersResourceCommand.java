@@ -40,7 +40,7 @@ import java.util.List;
 @Component(
         immediate = true,
         property = {
-                "javax.portlet.name=TestUpload",
+                "javax.portlet.name=CerebraUpload",
                 "mvc.command.name=/cerebra/folders"
         },
         service = MVCResourceCommand.class
@@ -90,9 +90,12 @@ public class GetFoldersResourceCommand implements MVCResourceCommand {
                 }
             }
 
+
+
             if (librariesFolder == null) throw new AssertionError("Libraries folder not found");
 
-            List<DLFolder> subFolders = DLFolderLocalServiceUtil.getFolders(librariesFolder.getGroupId(), librariesFolder.getFolderId());
+            List<DLFolder> subFolders = DLFolderLocalServiceUtil.getFolders(librariesFolder.getGroupId(),
+                    librariesFolder.getFolderId());
 
             for (DLFolder folder : subFolders) {
                 JSONObject entry = _jsonFactory.createJSONObject();

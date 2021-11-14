@@ -18,255 +18,225 @@
 
 <%@ include file="/init.jsp" %>
 
-<%-- 
-
-	add a grouped input
-	test serialize
-	test deserialize
-
-	test@test.com
-
---%>
-
-<style>
-  
-  :required:focus {
-  box-shadow: 0  0 6px rgba(255,0,0,0.5);
-  border: 1px red solid;
-  outline: 0;
-}
-
-input[type=text], select, textarea {
-  width: 100%; /* Full width */
-  padding: 12px; /* Some padding */ 
-  border: 1px solid #ccc; /* Gray border */
-  border-radius: 4px; /* Rounded borders */
-  box-sizing: border-box; /* Make sure that padding and width stays in place */
-  margin-top: 6px; /* Add a top margin */
-  margin-bottom: 16px; /* Bottom margin */
-  resize: vertical /* Allow the user to vertically resize the textarea (not horizontally) */
-}
-
-/* Style the submit button with a specific background color etc */
-input[type=submit] {
-  background-color: blue;
-  color: white;
-  padding: 12px 20px;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-}
-input[type=reset] {
-  background-color:white;
-  color: grey;
-  padding: 12px 20px;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-}
-/* When moving the mouse over the submit button, add a darker green color */
-input[type=submit]:hover {
-  background-color: blue;
-}
-
-
-/* Add a background color and some padding around the form */
-.container {
-  border-radius: 5px;
-  background-color: #f2f2f2;
-  padding: 20px;
-}
-
-.label1 {
-  background-color:grey;
-  color: white;
-  padding: 0.5rem;
-  font-family: sans-serif;
-  border-radius: 0.3rem;
-  cursor: pointer;
-  margin-top: 1rem;
-}
-
-#file-chosen{
-  margin-left: 0.3rem;
-  font-family: sans-serif;
-}
-</style>
-
 <portlet:resourceURL id="/cerebra/upload" var="uploadURL" />
 <portlet:resourceURL id="/cerebra/fields" var="fieldsURL" />
 <portlet:resourceURL id="/cerebra/folders" var="foldersURL" />
 
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.5/css/select2.min.css" />
-<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.5/js/select2.min.js"></script>
 
+<style>
 
+</style>
 
+<div class="container p-2 bg-light shadow border">
 
-<liferay-ui:panel collapsible="true" defaultState="collapsed" extended="true" title="<h3 class='ml-3'>Debug Information</h3>">
-    <div class="test py-4">
-<pre id="debug">
+<form id="cerebra-form" class="was-validated">
 
-uploadURL = <%= uploadURL %>
-fieldsURL = <%= fieldsURL %>
-foldersURL = <%= foldersURL %>
-</pre>
-    </div>
-</liferay-ui:panel>
+      <div class="card">
+        <h5 class="card-header bg-primary text-light" style="background-color: #005883 !important;">Upload to Cerebra</h5>
+        <div class="card-body" id="scrollTo">
 
+            <div class="row">
+              <div class="col-lg-6">
+                <div class="form-group input-text-wrapper">
+                  <label class="control-label" for="file">Choose a File</label>
+                  <input class="field form-control" id="file" name="<portlet:namespace/>file" type="file" required>
+                  <div class="invalid-feedback">Select a file to upload.</div>
+                </div>
+              </div>
+              <div class="col-lg-6">
 
-<div class="container">
-
-<form id="cerebra-form">
- <div class="form-group">
-	<input type="file" name="file" id="actual-btn" hidden/>
-
-     <!-- our custom upload button -->
-     <label>File:</label>
-     <label class="label1" for="actual-btn">Choose File</label>
-     <!-- name of file chosen -->
-      <span id="file-chosen">No file chosen</span>
-
-
-
-	<br> <label for="title">Title</label>
-    <input type="text" id="title" name="Title" >
-
-	<label for="description">Description</label>
-    <textarea id="description" name="description" style="height:200px" ></textarea>
-
-    <div class="row">
-      <div class="col-lg">
-        <label for="countryOrRegion">Country Or Region</label>
-        <select name="countryOrRegion" id="countryOrRegion" class="custom-select" >
-          <option value="">---------</option>
-        </select>
-      </div>
-      <div class="col-lg">
-        <label for="documentType">Document Type</label>
-        <select name="documentType" id="documentType" class="custom-select" >
-          <option selected disabled>Select Document Type</option>
-       </select>
-      </div>
-    </div>
-
-
-    <label for="tags" style="padding-bottom: 6px;">Tags</label>
-        <select class="form-control js-example-tokenizer" name="tags" multiple="multiple" >
-            <option selected value="Test">Test</option>
-        </select>
-
-    
-
-    <br> <label for="brand">Brand</label>
-    <input type="text" id="brand" name="Brand" >
-
-    
-    <br> <label for="channel">Channel</label>
-    <select class="form-control js-example-basic-single" name="channel" id="channel" class="custom-select" >
-      <option value="">---------</option>
+                <div class="form-group form-inline input-checkbox-wrapper">
+                  <label for="published">
+                      <input class="field toggle-switch" id="published" name="<portlet:namespace/>published" value="0" type="checkbox"/>
+                      <span class="toggle-switch-label pt-3 pb-1">Published</span>
+                      <span aria-hidden="true" class="toggle-switch-bar">
+                          <span class="toggle-switch-handle" data-label-off="No" data-label-on="Yes"></span>
+                      </span>
+                  </label>
+                </div>
+              </div>
+            </div>
       
-      </select>
+            <div class="row">
+              <div class="col-lg-6">
+                <div class="form-group">
+                  <label for="title">Title</label>
+                  <input type="text" class="form-control" id="title" name="<portlet:namespace/>title" required>
+                  <div class="invalid-feedback">A document title is required.</div>
+                </div>
+              </div>
+
+              <!-- <div class="col-lg-6">
+                <label for="document_type">Document Type</label>
+                <select class="custom-select" id="document_type" name="<portlet:namespace/>document_type" required>
+                    <option selected disabled></option>
+                </select>
+                <div class="invalid-feedback">Document type is required, please select one from the list.</div>
+              </div> -->
+
+              <div class="col-lg-6">
+                <label for="document_type">Cerebra Folder</label>
+                <select class="custom-select" id="cerebra_folder" name="<portlet:namespace/>cerebra_folder" required>
+                    <option selected disabled></option>
+                </select>
+                <div class="invalid-feedback">Cerebra folder is required, please select one from the list.</div>
+              </div>
 
 
-    <br> <label for="title">Client</label>
-    <input type="text" id="client" name="client" >
-    
-    
-    
-
-
-    <br> <label for="industry">Industry</label>
-    <select name="industry" id="industry" class="custom-select" >
-      <option selected value="Test">Test</option>
-    </select>
-
-    <br> <label for="partner">Partner</label>
-    <input type="text" id="partner" name="Partner" >
-
-    <br> <label for="primaryService">Primary Service</label>
-    <select name="primaryService" id="primaryService" class="custom-select" >
-      <option value="Test">Test</option>
-      </select>
-
-    <br> <label for="relevantYear">Relevant Year</label>
-    <select name="relevantYear" id="relevantYear" class="custom-select" >
-      <option value="1960">1960</option>
+            </div>
       
-    </select>
+            <div class="form-group">
+              <label for="description">Tags</label>
+              <textarea class="form-control customLook" id="cf_Additional_Tags" name="cf_Additional_Tags" type="text" data-role="tagsinput" value="">
+              <div class="pl-1 form-text">Use <kbd class="px-1">Tab</kbd> or <kbd class="px-1">,</kbd> to add a new tag</div>
+            </div>
+        </div>
+      </div>
 
-    <br> <label for="securityAccess">Security Access</label>
-    <select name="securityAccess" id="securityAccess" class="custom-select" >
-      <option value="">---------</option>
 
+      <div class="card">
+        <h5 class="card-header bg-primary text-light" style="background-color: #005883 !important;">Meta Data</h5>
+        <div class="card-body">
+
+          <div id="loading" class="loading-animation"></div>
+          <div id="custom-fields-container"></div>
           
-    </select>
+        </div>
+      </div>
 
-    <br> <label for="service">Service</label>
-    <select name="service" id="service" class="custom-select" >
-      <option value="">---------</option>
-      <option value="notApplicable">Not Applicable - Other</option>
-    </select>
+    <div class="buttons px-3 py-1">
+      <!-- <input style="background-color: #005883 !important;" class="btn btn-primary" type="submit" value="Upload"> -->
 
-  <input type="submit" value="Publish">
-  <input type="reset" value="Cancel">
+      <button id="submit-button" style="background-color: #005883 !important;" class="btn btn-primary" type="submit">
+        Upload
+      </button>
 
- </div>
+      <input class="btn btn-danger" type="reset" value="Cancel">
+    </div>
+
 </form>
+
+
+
 </div>
+
+
 <script>
 
 
+
+function renderCustomFields (fields) {
+  // js/customFields.js holds the rendered HTML structure
+
+  const fieldMap = {
+    "input-field" : input,
+    "boolean" : toggleSwitch,
+    "checkbox" : toggleSwitch,
+    "radio" : toggleSwitch,
+    "selection-list" : select
+  }
+
+  const fieldsToSkip = ["Cerebra Folder", "Additional Tags", "A Cerebra File", "Published"]
+
+  let container = document.getElementById("custom-fields-container");
+
+  fields.forEach(field => {
+
+    // Set required to string "required"
+    field.required = (field.required === "true") ? "required" : "";
+
+    // Set namespace on custom field
+    field.namespace = "<portlet:namespace/>";
+
+    // Skip fields that require custom markup
+    if (!fieldsToSkip.includes(field.displayName)) {
+      container.innerHTML += fieldMap[field.type](field)
+    }
+  });
+}
+
+let i = document.querySelector('#cf_Additional_Tags')
+    let tagify = new Tagify( i, {
+      originalInputValueFormat: valuesArr => valuesArr.map(item => item.value).join(',')
+    });
+
 AUI().ready(function (){
 
-    let debugPre = document.getElementById("debug")
+    let loadingAnimation = document.getElementById("loading")
+
+    function populateFolders () {
+
+      AUI().use('aui-io-request', function(A){
+          A.io.request('<%= foldersURL %>', {
+            method: 'get',
+            on: {
+                  success: function() {
+                      let data = JSON.parse(this.get('responseData'));
+                      let select = document.getElementById("cerebra_folder");
+
+                      data.forEach(folder => {
+                          select.add(new Option(folder.name, folder.id))
+                      })
+                  }
+              }
+          });
+      });
+
+    }
 
 
-    console.log("Portlet is Ready")
 
     AUI().use('aui-io-request', function(A){
         A.io.request('<%= fieldsURL %>', {
            method: 'get',
            on: {
                 success: function() {
-
-                  //  let data = JSON.parse(this.get('responseData'));
-                  //  console.log(data);
+                  let data = JSON.parse(this.get('responseData'));
+                  renderCustomFields(data);
+                  populateFolders();
+                  loadingAnimation.style.display = "none";
                 }
             }
         });
     });
-
-
-    AUI().use('aui-io-request', function(A){
-        A.io.request('<%= foldersURL %>', {
-           method: 'get',
-           on: {
-                success: function() {
-                    let data = JSON.parse(this.get('responseData'));
-                    let select = document.getElementById("documentType");
-
-                    data.forEach(folder => {
-                        select.innerHTML += `<option value="${data.id}">${data.name}</option>`
-                    })
-                }
-            }
-        });
-    });
-
-    console.log("Mkday")
 
     let fm = document.getElementById("cerebra-form");
+    let file = document.getElementById("file")
 
-    fm.onsubmit = function(event) {
+    file.onchange = function (event) {
+      
+      let title = document.getElementById("title")
+
+      title.value = ""
+
+      if (event.target.files.length > 0) {
+        title.value = event.target.files[0].name
+      }
+    }
+
+    fm.addEventListener("submit", function(event) {
+
         event.preventDefault()
 
-        let fm = document.getElementById("cerebra-form");
+
+        let submitButton = document.getElementById("submit-button");
+
+        submitButton.disabled = true
+        submitButton.innerHTML = `
+          <span class="inline-item inline-item-before">
+            <span aria-hidden="true" class="loading-animation"></span> </span
+          >Uploading
+        `
+
+        console.log("submitting form");
+
+        let fm = event.target
         let formData = new FormData(fm);
 
-        let tags = $(".js-example-tokenizer").val()
-        formData.set("tags", tags.join(","))
+        let tags = tagify.value.map(tag => tag.value);
 
+        formData.set("<portlet:namespace/>cf_Additional_Tags", tags.join(","))
+        
         $.ajax({
             url: "<%= uploadURL %>",
             type: 'POST',
@@ -274,33 +244,22 @@ AUI().ready(function (){
             contentType : false,
             processData: false,
             success: function(response) {
-                console.log(JSON.parse(response));
+                // console.log(JSON.parse(response));
+                document.getElementById("scrollTo").scrollIntoView({ behavior: 'smooth', block: 'center' });
+                submitButton.disabled = false
+                submitButton.innerHTML = `Upload`
+                fm.reset()
             },
             error: function (xhr, ajaxOptions, thrownError) {
                 alert(xhr.status);
                 alert(thrownError);
+                submitButton.disabled = false
+                submitButton.innerHTML = `Upload`
             }
         });
-    }
 
-
-    $(function(){
-      $('.js-example-tokenizer').select2({
-        tags: true,
-        tokenSeparators: [',', ' ']
-      })
-
-    });
-
-    const actualBtn = document.getElementById('actual-btn');
-    const fileChosen = document.getElementById('file-chosen');
-
-    actualBtn.addEventListener('change', function(){
-      fileChosen.textContent = this.files[0].name
+        return false;
     })
-
-
-
 })
 
 
@@ -308,8 +267,3 @@ AUI().ready(function (){
 
 
 </script>
-
-
-
-
-

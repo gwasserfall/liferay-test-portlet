@@ -1,0 +1,18 @@
+.customLook {
+  --tag-bg : #005883 !important;
+  --tag-text-color          : #FFF !important;
+  --tag-remove-btn-color    : #FFF !important;
+}
+
+.customLook .tagify__tag:hover {
+  --tag-text-color: black !important;
+  --tag-remove-btn-color    : black !important;
+}
+
+/* .custom-select {
+  margin-bottom: 5px;
+} */
+
+.form-text {
+  font-size: 0.775rem !important;
+}
